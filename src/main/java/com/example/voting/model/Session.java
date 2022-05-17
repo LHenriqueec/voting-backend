@@ -12,7 +12,7 @@ public class Session extends Entity {
 
 	private Date startedAt;
 	private Date endedAt;
-	
+
 	@ManyToMany
 	@JoinTable(
 			name = "session_user",

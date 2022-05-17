@@ -13,19 +13,19 @@ public class UserService {
 
 	@Autowired
 	private UserRepository repository;
-	
+
 	public Iterable<User> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public Optional<User> findById(int id) {
 		return repository.findById(id);
 	}
-	
+
 	public Iterable<User> findByName(String name) {
 		return repository.findByNameContaining(name);
 	}
-	
+
 	public int createUser(User user) {
 		return repository.save(user).getId();
 	}

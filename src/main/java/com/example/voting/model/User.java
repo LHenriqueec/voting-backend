@@ -13,10 +13,10 @@ public class User extends Entity {
 
 	@ApiModelProperty(required = true, allowEmptyValue = false)
 	private String cpf;
-	
+
 	@ApiModelProperty(required = true, allowEmptyValue = false)
 	private String name;
-	
+
 	@ManyToMany(mappedBy = "users")
 	private List<Session> session;
 

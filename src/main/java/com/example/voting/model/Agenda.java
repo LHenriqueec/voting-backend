@@ -6,7 +6,7 @@ import javax.persistence.OneToOne;
 public class Agenda extends Entity {
 
 	private String subject;
-	
+
 	@OneToOne
 	private Session session;
 

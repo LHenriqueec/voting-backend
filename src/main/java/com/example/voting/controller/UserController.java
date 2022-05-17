@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiParam;
 consumes = MediaType.APPLICATION_JSON_VALUE,
 produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
-	
+
 	@Autowired
 	private UserService service;
 
@@ -34,7 +34,7 @@ public class UserController {
 	public @ResponseBody Iterable<User> listUsers() {
 		return service.findAll();
 	}
-	
+
 	@GetMapping(path="{name}")
 	@ApiOperation(value = "Find users by name",
 			response = User.class,
@@ -43,7 +43,7 @@ public class UserController {
 		System.out.println(name);
 		return service.findByName(name);
 	}
-	
+
 	@PostMapping
 	@ApiOperation(value = "Create a user",
 			response = Integer.class)
