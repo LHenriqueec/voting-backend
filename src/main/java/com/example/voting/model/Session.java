@@ -6,8 +6,12 @@ import java.util.List;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import io.swagger.annotations.ApiModel;
 
 @javax.persistence.Entity
+@ApiModel(value = "Details about session")
 public class Session extends Entity {
 
 	private Date startedAt;
@@ -16,9 +20,12 @@ public class Session extends Entity {
 	@ManyToMany
 	@JoinTable(
 			name = "session_user",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "session_id"))
+			joinColumns = @JoinColumn(name = "session_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> users;
+
+	@OneToOne
+	private Agenda agenda;
 
 	public Date getStartedAt() {
 		return startedAt;
@@ -42,5 +49,13 @@ public class Session extends Entity {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public Agenda getAgenda() {
+		return agenda;
+	}
+
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
 	}
 }

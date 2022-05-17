@@ -6,8 +6,9 @@ import javax.persistence.OneToOne;
 public class Agenda extends Entity {
 
 	private String subject;
+	private boolean active = true;
 
-	@OneToOne
+	@OneToOne(mappedBy = "agenda")
 	private Session session;
 
 	public String getSubject() {
@@ -18,11 +19,11 @@ public class Agenda extends Entity {
 		this.subject = subject;
 	}
 
-	public Session getSession() {
-		return session;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setSession(Session session) {
-		this.session = session;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

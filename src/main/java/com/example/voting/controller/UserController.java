@@ -40,7 +40,6 @@ public class UserController {
 			response = User.class,
 			responseContainer = "List")
 	public @ResponseBody Iterable<User> usersByName(@PathVariable  String name) {
-		System.out.println(name);
 		return service.findByName(name);
 	}
 
@@ -48,8 +47,8 @@ public class UserController {
 	@ApiOperation(value = "Create a user",
 			response = Integer.class)
 	public @ResponseBody int addUser(
-			@ApiParam(value = "User info to add on system", required = true, example = "{cpf: '123', name: 'Fernando'}")
+			@ApiParam(value = "User info to add on system")
 			@RequestBody User user) {
-		return service.createUser(user);
+		return service.save(user);
 	}
 }
