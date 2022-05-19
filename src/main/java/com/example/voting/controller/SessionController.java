@@ -1,20 +1,20 @@
 package com.example.voting.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.voting.model.Session;
+import com.example.voting.dto.session.detail.DetailSessionDTO;
 import com.example.voting.service.SessionService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @Controller
 @RequestMapping(path="/session")
@@ -28,18 +28,21 @@ public class SessionController {
 
 	@GetMapping
 	@ApiOperation(value = "List all sessions",
-			response = Session.class,
+			response = DetailSessionDTO.class,
 			responseContainer = "List")
-	public @ResponseBody Iterable<Session> listSessions() {
-		return service.findAll();
+	public @ResponseBody List<DetailSessionDTO> listSessions() {
+		return service.detailAllSessions();
 	}
 
-	@PostMapping
-	@ApiOperation(value = "Register a session on agenda",
-			response = Integer.class)
-	public @ResponseBody int addSession(
-			@ApiParam(value = "Session to register on agenda")
-			@RequestBody Session session) {
-		return service.save(session);
+	@GetMapping("{id}")
+	@ApiOperation(value = "Detail a session", response = DetailSessionDTO.class)
+	public @ResponseBody DetailSessionDTO findSession(@PathVariable int id) {
+		return service.detailSession(id);
+	}
+
+	@GetMapping(path = "/start/{id}")
+	@ApiOperation(value = "Start session voting")
+	public @ResponseBody void startSession(@PathVariable int id) {
+		service.startSession(id);
 	}
 }
