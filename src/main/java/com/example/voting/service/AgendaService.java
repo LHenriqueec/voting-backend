@@ -1,6 +1,8 @@
 package com.example.voting.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
@@ -66,5 +68,10 @@ public class AgendaService extends Service<Agenda, AgendaRepository> {
 	@Transactional
 	public void disableAgenda(int id) {
 		findById(id).get().setActive(false);
+	}
+
+	public Map<String, Long> resultVotes(int id) {
+		return findById(id).get().getSession().getVotes().stream()
+				.collect(Collectors.groupingBy(vote -> vote.getValue(), Collectors.counting()));
 	}
 }

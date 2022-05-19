@@ -1,6 +1,7 @@
 package com.example.voting.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -42,6 +43,12 @@ public class AgendaController {
 	@ApiOperation(value = "Disable an agenda by id")
 	public @ResponseBody void disableAgenda(@PathVariable int id) {
 		service.disableAgenda(id);
+	}
+
+	@GetMapping("/result/{id}")
+	@ApiOperation(value = "Detail result votes agenda")
+	public @ResponseBody Map<String, Long> resultVotes(@PathVariable int id) {
+		return service.resultVotes(id);
 	}
 
 	@PostMapping

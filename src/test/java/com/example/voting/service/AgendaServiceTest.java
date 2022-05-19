@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,7 @@ import com.example.voting.dto.agenda.list.ListAllAgendaDTO;
 import com.example.voting.model.Agenda;
 import com.example.voting.model.Session;
 import com.example.voting.model.User;
+import com.example.voting.model.Vote;
 import com.example.voting.repository.AgendaRepository;
 
 class AgendaServiceTest {
@@ -100,6 +102,35 @@ class AgendaServiceTest {
 		service.disableAgenda(idAgenda);
 
 		verify(agenda).setActive(false);
+	}
+
+	@Test
+	public void testResultVoltes() {
+		int idAgenda = 1;
+		String yes = "y";
+		String no = "n";
+
+		Agenda agenda = mock(Agenda.class);
+		Session session = mock(Session.class);
+		Vote vote1 = mock(Vote.class);
+		Vote vote2 = mock(Vote.class);
+		Vote vote3 = mock(Vote.class);
+		Vote vote4 = mock(Vote.class);
+		Optional<Agenda> optional = Optional.of(agenda);
+		List<Vote> votes = Arrays.asList(vote1, vote2, vote3, vote4);
+
+		when(repository.findById(idAgenda)).thenReturn(optional);
+		when(agenda.getSession()).thenReturn(session);
+		when(session.getVotes()).thenReturn(votes);
+		when(vote1.getValue()).thenReturn(yes);
+		when(vote2.getValue()).thenReturn(no);
+		when(vote3.getValue()).thenReturn(yes);
+		when(vote4.getValue()).thenReturn(yes);
+
+		Map<String, Long> resultVotes = service.resultVotes(idAgenda);
+
+		assertEquals(3, resultVotes.get(yes));
+		assertEquals(1, resultVotes.get(no));
 	}
 
 }
