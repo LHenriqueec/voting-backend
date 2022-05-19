@@ -1,8 +1,11 @@
 package com.example.voting.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.voting.model.Agenda;
+import com.example.voting.dto.agenda.create.CreateAgendaDTO;
+import com.example.voting.dto.agenda.list.ListAllAgendaDTO;
 import com.example.voting.service.AgendaService;
 
 import io.swagger.annotations.Api;
@@ -18,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/agenda")
 @Api(tags = "Agenda", value = "Agenda operations",
 consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -28,11 +33,9 @@ public class AgendaController {
 	private AgendaService service;
 
 	@GetMapping
-	@ApiOperation(value = "List all agendas",
-			response = Agenda.class,
-			responseContainer = "List")
-	public @ResponseBody Iterable<Agenda> listAgendas() {
-		return service.findAll();
+	@ApiOperation(value = "List all agendas", responseContainer = "List")
+	public @ResponseBody List<ListAllAgendaDTO> listAgendas() {
+		return service.listAgendas();
 	}
 
 	@GetMapping("/disable/{id}")
@@ -46,7 +49,7 @@ public class AgendaController {
 			response = Integer.class)
 	public @ResponseBody int saveAgenda(
 			@ApiParam(value = "Agenda info to add")
-			@RequestBody Agenda agenda) {
-		return service.save(agenda);
+			@RequestBody CreateAgendaDTO agenda) {
+		return service.createAgenda(agenda);
 	}
 }

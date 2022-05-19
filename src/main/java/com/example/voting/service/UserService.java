@@ -10,4 +10,8 @@ public class UserService extends Service<User, UserRepository> {
 	public Iterable<User> findByName(String name) {
 		return repository.findByNameContaining(name);
 	}
+
+	public User findByCpf(String cpf) {
+		return repository.findByCpf(cpf);
+	}
 }

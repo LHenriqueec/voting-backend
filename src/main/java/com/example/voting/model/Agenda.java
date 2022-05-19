@@ -26,4 +26,12 @@ public class Agenda extends Entity {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
 }

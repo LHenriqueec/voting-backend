@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import io.swagger.annotations.ApiModel;
@@ -16,6 +17,7 @@ public class Session extends Entity {
 
 	private Date startedAt;
 	private Date endedAt;
+	private int duration;
 
 	@ManyToMany
 	@JoinTable(
@@ -26,6 +28,9 @@ public class Session extends Entity {
 
 	@OneToOne
 	private Agenda agenda;
+
+	@OneToMany(mappedBy = "session")
+	private List<Vote> votes;
 
 	public Date getStartedAt() {
 		return startedAt;
@@ -43,6 +48,14 @@ public class Session extends Entity {
 		this.endedAt = endedAt;
 	}
 
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
 	public List<User> getUsers() {
 		return users;
 	}
@@ -57,5 +70,13 @@ public class Session extends Entity {
 
 	public void setAgenda(Agenda agenda) {
 		this.agenda = agenda;
+	}
+
+	public List<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(List<Vote> votes) {
+		this.votes = votes;
 	}
 }
