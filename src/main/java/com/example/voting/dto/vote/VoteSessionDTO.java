@@ -1,10 +1,13 @@
 package com.example.voting.dto.vote;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "Vote on Session")
-public class VoteSessionDTO {
+public class VoteSessionDTO implements Serializable {
+	private static final long serialVersionUID = 7438451895954955613L;
 
 	private int userId;
 	private int sessionId;
