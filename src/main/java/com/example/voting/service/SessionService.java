@@ -32,4 +32,8 @@ public class SessionService extends Service<Session, SessionRepository> {
 		Session session = findById(sessionId).get();
 		return DetailSessionTransformer.transform(session);
 	}
+
+	public boolean sessionIsActive(Session session) {
+		return repository.existsByIdAndEndedAtIsNull(session.getId());
+	}
 }
