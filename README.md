@@ -1,5 +1,5 @@
 # Desafio técnico Backend -> Projecto: **Voting**
-Um pequeno sistema de gerenciamento de sessões de votação e uma determinada pauta.
+Um pequeno sistema de gerenciamento de Sessões de votação a uma determinada Pauta.
 
 ![issues](https://img.shields.io/github/issues/LHenriqueec/voting-backend)
 ![coverate](https://img.shields.io/badge/coverage-60%25-yellowgreen)
@@ -24,7 +24,7 @@ Um pequeno sistema de gerenciamento de sessões de votação e uma determinada p
 - [x] Cria novas sessões
 - [x] Gerencia os votos da sessão
 
-Também desenvolvi um pequeno frontend () para usar a api
+Também desenvolvi um pequeno [frontend](https://github.com/LHenriqueec/voting-front) para usar a api
 <h1 align="center">
   <img src="./frontend.gif"></img>
 <h1>
