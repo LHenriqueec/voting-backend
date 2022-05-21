@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel(value = "Create Session")
 public class SessionDTO {
-	private int duration;
+	private int duration = 1; // default 1 min
 
 	public int getDuration() {
 		return duration;
