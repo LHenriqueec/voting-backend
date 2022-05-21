@@ -50,6 +50,7 @@ public class SessionService extends Service<Session, SessionRepository> {
 	}
 
 	public boolean sessionIsActive(Session session) {
-		return repository.existsByIdAndEndedAtIsNull(session.getId());
+		Date now = new Date();
+		return repository.existsByIdAndEndedAtIsGreaterThanEqual(session.getId(), now);
 	}
 }
