@@ -2,11 +2,12 @@ package com.example.voting.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.voting.dto.agenda.create.CreateAgendaDTO;
@@ -18,10 +19,13 @@ import com.example.voting.repository.AgendaRepository;
 import com.example.voting.service.mq.MessageService;
 import com.example.voting.transformer.agenda.CreateAgendaTransformer;
 import com.example.voting.transformer.agenda.ListAgendaTransformer;
+import com.example.voting.transformer.vote.DetailVotesTransformer;
 
 @org.springframework.stereotype.Service
 public class AgendaService extends Service<Agenda, AgendaRepository> {
 	
+	private Logger logger = LoggerFactory.getLogger(AgendaService.class);
+
 	@Autowired
 	private SessionService sessionService;
 
@@ -74,12 +78,14 @@ public class AgendaService extends Service<Agenda, AgendaRepository> {
 		findById(id).get().setActive(false);
 	}
 
-	public void notifyEndedVoteSession(int id) {
-		messageService.sendMessage(resultVotes(id));
+	@Transactional
+	public void notifyEndedVoteSession(int sessionId) {
+		Session session = sessionService.findById(sessionId).get();
+		logger.info("Send message to ended vote session id: %d".formatted(sessionId));
+		messageService.sendMessage(DetailVotesTransformer.transform(session.getVotes()));
 	}
 
 	public Map<String, Long> resultVotes(int id) {
-		return findById(id).get().getSession().getVotes().stream()
-				.collect(Collectors.groupingBy(vote -> vote.getValue(), Collectors.counting()));
+		return DetailVotesTransformer.transform(findById(id).get().getSession().getVotes());
 	}
 }
