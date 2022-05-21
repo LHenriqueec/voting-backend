@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.voting.dto.agenda.create.CreateAgendaDTO;
 import com.example.voting.dto.agenda.list.ListAllAgendaDTO;
 import com.example.voting.service.AgendaService;
-import com.example.voting.service.mq.MessageService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,9 +32,6 @@ public class AgendaController {
 
 	@Autowired
 	private AgendaService service;
-
-	@Autowired
-	private MessageService messageService;
 
 	@GetMapping
 	@ApiOperation(value = "List all agendas", responseContainer = "List")
@@ -53,7 +49,6 @@ public class AgendaController {
 	@ApiOperation(value = "Detail result votes agenda")
 	public @ResponseBody Map<String, Long> resultVotes(@PathVariable int id) {
 		Map<String, Long> resultVotes = service.resultVotes(id);
-		messageService.sendMessage(resultVotes);
 		return resultVotes;
 	}
 
