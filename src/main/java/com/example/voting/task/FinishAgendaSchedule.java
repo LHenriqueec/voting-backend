@@ -13,7 +13,7 @@ public class FinishAgendaSchedule implements Runnable {
 
 	@Override
 	public void run() {
-		service.finishAgenda(id);
+		service.notifyEndedVoteSession(id);
 	}
 
 }

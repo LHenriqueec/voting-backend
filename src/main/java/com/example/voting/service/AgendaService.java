@@ -15,6 +15,7 @@ import com.example.voting.model.Agenda;
 import com.example.voting.model.Session;
 import com.example.voting.model.User;
 import com.example.voting.repository.AgendaRepository;
+import com.example.voting.service.mq.MessageService;
 import com.example.voting.transformer.agenda.CreateAgendaTransformer;
 import com.example.voting.transformer.agenda.ListAgendaTransformer;
 
@@ -26,6 +27,9 @@ public class AgendaService extends Service<Agenda, AgendaRepository> {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private MessageService messageService;
 
 	@Transactional
 	public int createAgenda(CreateAgendaDTO agendaCreated) {
@@ -68,6 +72,10 @@ public class AgendaService extends Service<Agenda, AgendaRepository> {
 	@Transactional
 	public void disableAgenda(int id) {
 		findById(id).get().setActive(false);
+	}
+
+	public void notifyEndedVoteSession(int id) {
+		messageService.sendMessage(resultVotes(id));
 	}
 
 	public Map<String, Long> resultVotes(int id) {
