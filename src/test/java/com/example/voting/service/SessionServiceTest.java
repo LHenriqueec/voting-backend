@@ -17,8 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import com.example.voting.dto.session.detail.DetailSessionDTO;
+import com.example.voting.factory.FactoryScheduler;
 import com.example.voting.model.Session;
 import com.example.voting.model.User;
 import com.example.voting.model.Vote;
@@ -31,6 +33,12 @@ class SessionServiceTest {
 
 	@Mock
 	private SessionRepository repository;
+
+	@Mock
+	private ThreadPoolTaskScheduler scheduler;
+
+	@Mock
+	private FactoryScheduler factory;
 
 	@BeforeEach
 	public void setup() {
