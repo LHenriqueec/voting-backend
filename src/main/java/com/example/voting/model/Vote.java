@@ -1,17 +1,14 @@
 package com.example.voting.model;
 
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @javax.persistence.Entity
 public class Vote extends Entity {
 
 	@ManyToOne
-	@JoinColumn(unique = true)
 	private User user;
 
 	@ManyToOne
-	@JoinColumn(unique = true)
 	private Session session;
 
 	private String value;
